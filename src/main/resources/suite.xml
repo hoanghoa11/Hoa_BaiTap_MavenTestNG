@@ -1,0 +1,10 @@
+<!--Format chuẩn của file xml-->
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite" verbose="1">
+    <test name="First Test">
+        <classes>
+            <class name="BaiTap3.AddCategory"></class>
+        </classes>
+    </test>
+</suite>

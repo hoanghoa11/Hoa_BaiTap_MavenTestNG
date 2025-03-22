@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Regression Test" verbose="1" parallel="classes">
+    <!-- Chạy song song các Class trong từng thẻ <test> chỉ định -->
+    <parameter name="browser" value="edge"/>
+    <test name="Login Test CRM 1" parallel="classes">
+        <!-- Nếu không dùng parallel="methods" kết hợp thì nó chỉ chạy tuần tự các @Test trong từng class -->
+        <classes>
+            <class name="BaiTap5.Testcase.LoginTest">
+            </class>
+            <class name="BaiTap5.Testcase.DashBoardTest">
+            </class>
+            <class name="BaiTap5.Testcase.CategoryTest">
+            </class>
+            <class name="BaiTap5.Testcase.ProductTest">
+            </class>
+        </classes>
+    </test>
+</suite>
