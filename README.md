@@ -1,0 +1,71 @@
+
+BÀI TẬP SELENIUM JAVA ANHTESTER 2023
+BÀI TẬP 1 CHẠY TRÊN PROJECT MAVEN
+(Bắt đầu từ bài học số 9 trở về sau)
+
+- https://cms.anhtester.com/login
+
+- Add Category
+       + Add hình sẵn vài tấm bằng tay trước khi chạy auto
+       + Chú ý phần chọn hình: click Browse -> search tên hình add bằng tay -> click item hình -> Click Add button
+- Sau khi add category xong trở về menu Category (trang list)
+- Search category name vừa add
+- Get cái Text của item đầu tiên cột Name dưới Table sau khi search xem đúng không
+
+
+BÀI TẬP 2 VỀ GHI CHÚ TRONG TESTNG (Annotation)
+
+- Tách code cũ ở BT Add Category ra theo các ghi chú (annotation):
+(không dùng hàm main nữa)
+
++ Tách đoạn setup Driver ra riêng không để chung trong test case
++ Tách Login sẽ chạy trước mỗi test case
++ Optimize code chạy cho ổn định hơn (sleep, xpath)
++ Tập chạy code trên file suite XML
+
+
+
+BÀI TẬP 3 VỀ ASSERT
+
+THÊM ASSERT VÀO ADD CATEGORY ĐANG LÀM Ở BT2
+
+- Kiểm tra Text của tất cả dialog
+- Kiểm tra Text trên mỗi trang
+- Kiểm tra giá trị item vừa add với Assert chứ ko dùng if else như BT1 nữa
+
+
+
+BÀI TẬP 3 MỞ RỘNG
+
+Làm thêm case Edit và Delete category
+
+Gợi ý:
+        + Edit thì gọi lại phần Add. Xong thực hiện tiếp tục lệnh nhấn button Edit...
+        + Edit thì search lại check giá trị mới sau khi edit
+
+        + Delete thì sau khi xoá xong cần check lại là element đó không tồn tại (chỉ trong buổi học)
+
+
+
+BÀI TẬP 4 VẬN DỤNG ACTIONS ROBOT CLASS
+
+- Add Product
+ + Select giá trị Category ở BT3
+ + Chọn Colors >= 2 màu (dùng Ctrl + A và Delete để hỗ trợ chọn màu và xoá màu)
+ + Verify Text của Colors trên (dùng Assert) (chỉ cần check số lượng color hiển thị thôi)
+ + Dùng biến toàn cục để lưu giá trị Data có thay đổi khi cần để dễ chỉnh sửa khi chạy lại nhiều lần
+
+
+
+
+BÀI TẬP 4 PHẦN MỞ RỘNG
+
+- Tạo luồng chạy liên tục từ Add Category tới Add Product
+     + Sử dụng lại giá trị của Category vừa add cho Product (không điền giá trị category bằng tay)
+ 
+
+BÀI TẬP 5 VỀ POM (Page Object Model)
+
+- Thiết kế các hàm xử lý trong từng trang: enterEmail, enterPassword,..., addCategory, addProduct,...
+- Tạo liên kết trang: Login => Dashboard, Dashboard => Category, Dashboard => Product
+- Tạo suite xml để gọi test case chạy chứ không chạy trực tiếp trong class
