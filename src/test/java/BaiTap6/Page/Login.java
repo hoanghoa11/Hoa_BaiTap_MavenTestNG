@@ -1,6 +1,6 @@
-package BaiTap5.Page;
+package BaiTap6.Page;
 
-import keywords.WebUI;
+import BaiTap6.Page.DashBoard;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

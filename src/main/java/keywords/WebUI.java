@@ -385,6 +385,12 @@ public class WebUI {
         // wait for Javascript to loaded
         ExpectedCondition<Boolean> jsLoad = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState")
                 .toString().equals("complete");
+        if (driver != null) {
+
+            js.executeScript("window.scrollBy(0,250)", "");
+        } else {
+            System.out.println("Driver đã bị đóng hoặc chưa khởi tạo!");
+        }
 
         //Get JS is Ready
         boolean jsReady = js.executeScript("return document.readyState").toString().equals("complete");

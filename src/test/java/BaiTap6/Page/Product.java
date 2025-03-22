@@ -1,4 +1,4 @@
-package BaiTap5.Page;
+package BaiTap6.Page;
 
 import keywords.WebUI;
 import org.openqa.selenium.By;
@@ -16,9 +16,10 @@ public class Product {
 
     private By buttonAddNewProduct = By.xpath("//span[normalize-space()='Add New Product']");
     private By headerNewProduct = By.xpath("//h5[normalize-space()='Add New Product']");
+    private By headerAllProducts = By.xpath("//span[normalize-space()='All products']");
     //Product Information
     private By inputProductName = By.xpath("//label[contains(normalize-space(),'Product Name')]/following-sibling::div/input");
-    private By dropdownCategoryProduct = By.xpath("//label[.='Category *']/following-sibling::div/div");
+    private By dropdownCategoryProduct = By.xpath("//label[normalize-space()='Category']/following-sibling::div/div");
     private By inputSearchCategoryProduct = By.xpath("//div[@id='category']//input");
     private By dropdownBrand = By.xpath("//button[@data-id='brand_id']");
     private By inputSearchBrand = By.xpath("//div[@class='bs-searchbox']//input[@aria-controls='bs-select-2']");
@@ -54,9 +55,20 @@ public class Product {
     private By uploadFilePDF = By.xpath("//div[@data-type='document']");
     //Button Save
     private By buttonSavePublish = By.xpath("//button[normalize-space()='Save & Publish']");
-    private By buttonSaveUnpublish = By.xpath("//button[normalize-space()='Save & Publish']");
 
     private By messageSuccess = By.xpath("//span[@data-notify='message']");
+
+    //search lại sản phẩm vừa tạo
+    private By inputSearchProduct = By.xpath("//input[@id='search']");
+    private By firstItemOnProductTable = By.xpath("(//div[@class='col'])[2]//span");
+    //Edit sản phẩm vừa tạo
+    private By buttonAllProducts = By.xpath("//span[normalize-space()='All products']");
+
+
+    private By firstIconProductEdit = By.xpath("(//form[@id='sort_products']//div//tr//td//a[@title='Edit'])[1]");
+    private By selectCategory1 = By.xpath("(//span[@class='text'][normalize-space()='------ TestExcel1'])[1]");
+    private By buttonUpdateProduct = By.xpath("//button[normalize-space()='Update Product']");
+    private By msgUpdateProductSuccess = By.xpath("//div[@role='alert']");
 
     //XD cac ham xu ly chinh tren trang nay
     public void clickButtonAddProduct() {
@@ -105,9 +117,77 @@ public class Product {
         WebUI.sleep(2);
         WebUI.clickElement(buttonSavePublish);
     }
-
     public void verifyAddProductSuccess() {
         Assert.assertTrue(driver.findElement(messageSuccess).isDisplayed(), "Lỗi, Không thêm được sản phẩm");
         Assert.assertEquals(driver.findElement(messageSuccess).getText(), "Product has been inserted successfully", "Nội dung message không chính xác");
+    }
+    public void clickButtonAllProducts() {
+        WebUI.clickElement(buttonAllProducts);
+    }
+
+    public void verifyRedirectAllProductPageSuccess() {
+        Assert.assertTrue(driver.findElement(headerAllProducts).isDisplayed(), "Không tìm thấy header page");
+        Assert.assertEquals(driver.findElement(headerAllProducts).getText(), "All products", "Header màn All Products không đúng");
+    }
+
+    public void searchProduct(String productName) {
+        WebUI.clickElement(headerAllProducts);
+        WebUI.setText(inputSearchProduct,productName);
+        driver.findElement(inputSearchProduct).sendKeys(Keys.ENTER);
+    }
+    public void clickButtonEditProducts() {
+        WebUI.clickElement(firstIconProductEdit);
+    }
+
+    public void editProduct(String productName) {
+        driver.findElement(inputProductName).clear();
+        WebUI.setText(inputProductName, productName);
+        WebUI.sleep(3);
+
+        WebUI.clickElement(dropdownCategoryProduct);
+        WebUI.setText(inputSearchCategoryProduct, "Gio qua tet");
+        WebUI.sleep(1);
+        driver.findElement(inputSearchCategoryProduct).sendKeys(Keys.ENTER);
+        WebUI.sleep(2);
+
+        WebUI.clickElement(dropdownBrand);
+        WebUI.setText(inputSearchBrand, "test1");
+        WebUI.sleep(1);
+        driver.findElement(inputSearchBrand).sendKeys(Keys.ENTER);
+        WebUI.sleep(2);
+
+        driver.findElement(inputUnit).clear();
+        WebUI.setText(inputUnit, "VNĐ");
+
+        driver.findElement(inputWeight).clear();
+        WebUI.setText(inputWeight, "0.3");
+        WebUI.sleep(2);
+
+        driver.findElement(inputMinPurchaseQty).clear();
+        WebUI.setText(inputMinPurchaseQty, "100");
+        WebUI.sleep(2);
+
+        WebUI.setText(inputTags, "S");
+        driver.findElement(inputTags).sendKeys(Keys.ENTER);
+        WebUI.sleep(1);
+
+        driver.findElement(inputUnitPrice).clear();
+        WebUI.sleep(1);
+        WebUI.setText(inputUnitPrice, "200");
+
+        driver.findElement(inputDiscount).clear();
+        WebUI.setText(inputDiscount, "0");
+        WebUI.sleep(2);
+
+//        driver.findElement(inputQuantity).clear();
+//        WebUI.setText(inputQuantity, "100");
+//        WebUI.sleep(2);
+
+        WebUI.clickElement(buttonUpdateProduct);
+    }
+
+    public void verifyEditProductSuccess() {
+        Assert.assertTrue(driver.findElement(msgUpdateProductSuccess).isDisplayed(), "Lỗi, Không thêm được sản phẩm");
+        Assert.assertEquals(driver.findElement(msgUpdateProductSuccess).getText(), "Product has been updated successfully", "Nội dung message không chính xác");
     }
 }

@@ -13,7 +13,7 @@ public class ProductTest extends BaseTest {
     Login loginPage;
     DashBoard dashboardPage;
     Product productPage;
-    private String PRODUCT_NAME = "Áo thun loại 1";
+    private String PRODUCT_NAME = "Gio loại 1";
 
     @Test
     public void AddProduct_Success() {

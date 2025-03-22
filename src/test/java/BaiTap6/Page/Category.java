@@ -1,4 +1,4 @@
-package BaiTap5.Page;
+package BaiTap6.Page;
 
 import keywords.WebUI;
 import org.openqa.selenium.By;
