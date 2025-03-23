@@ -8,6 +8,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 import java.time.Duration;
 
@@ -32,7 +34,12 @@ public class BaseTest {
         driver.manage().window().maximize();
     }
 
-    public void createBrowser(String browserName) {
+    @BeforeMethod
+    @Parameters({"browser"})
+    public void createDriver(@Optional("chrome") String browser) {
+        setupDriver(browser);
+    }
+    public void setupDriver(String browserName) {
         if (browserName.trim().toLowerCase().equals("chrome")) { //chuyen ve chu thuong cat khoang trang o 2   dau
             driver = new ChromeDriver();
         }
