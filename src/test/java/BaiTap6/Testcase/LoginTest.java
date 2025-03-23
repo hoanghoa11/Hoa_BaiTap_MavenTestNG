@@ -72,7 +72,7 @@ public class LoginTest extends BaseTest {
     public void testLoginCMS_Success_WithCheckbox() {
         loginPage = new Login(driver);
         loginPage.LoginCMS_SelectCheckboxRemember("admin@example.com", "123456");
-        waitForPageLoaded(); //Khi chuyển trang mới dùng (load trang)
+
         loginPage.verifyLoginSuccess();
     }
 
@@ -81,7 +81,7 @@ public class LoginTest extends BaseTest {
     public void testNavigateToForgotPW() {
         loginPage = new Login(driver);
         loginPage.LoginCMS_ForgotPW("", "");
-        waitForPageLoaded(); //Khi chuyển trang mới dùng (load trang)
+
         loginPage.verifyNavigateForgotPW();
     }
 }

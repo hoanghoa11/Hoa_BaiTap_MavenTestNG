@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Regression Test" verbose="1">
+    <test name="LoginTest CRM">
+        <!--        Chạy suite theo class-->
+        <classes>
+            <class name="BaiTap6.Testcase.LoginTest"/>
+            <class name="BaiTap6.Testcase.DashBoardTest"/>
+
+            <!--        Chạy suite theo method-->
+            <class name="BaiTap6.Testcase.ProductTest">
+                <methods>
+                    <include name="EditProduct_Success"/>
+                    <include name="AddProduct_Success"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
