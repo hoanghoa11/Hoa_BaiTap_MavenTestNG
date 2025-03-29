@@ -26,6 +26,7 @@ public class WebUI {
     public WebUI(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
     }
 
     public static void sleep(double second) {
