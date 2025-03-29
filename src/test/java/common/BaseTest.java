@@ -4,6 +4,7 @@ package common;
 import com.hoa.drivers.DriverManager;
 import com.hoa.drivers.PropertiesHelper;
 import com.hoa.helpers.CaptureHelper;
+import listeners.TestListener;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -14,19 +15,25 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.time.Duration;
 
+@Listeners(TestListener.class)
 public class BaseTest {
 
 
-
     public static WebDriver driver;
+
+    public static void loginCRM() {
+        driver.get("https://crm.anhtester.com/admin/authentication");
+        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).clear();
+        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).clear();
+        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).sendKeys("admin@example.com");
+        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).sendKeys("123456");
+        driver.findElement(By.xpath(LocatorsCRM.buttonLogin)).click();
+    }
 
     public void sleep(double secord) {
         try {
@@ -34,7 +41,9 @@ public class BaseTest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-    } @BeforeMethod
+    }
+
+    @BeforeMethod
     public void createBrowser() {
         driver = new ChromeDriver();
         // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -42,7 +51,7 @@ public class BaseTest {
         driver.manage().window().maximize();
     }
 
-//    public void createBrowser(String browserName) {
+    //    public void createBrowser(String browserName) {
 //        if (browserName.trim().toLowerCase().equals("chrome")) { //chuyen ve chu thuong cat khoang trang o 2   dau
 //            driver = new ChromeDriver();
 //        }
@@ -59,7 +68,7 @@ public class BaseTest {
     @BeforeMethod
     @Parameters({"browser"})
     public void createDriver(@Optional("chrome") String browserName) {
-        PropertiesHelper.loadAllFiles() ;
+        PropertiesHelper.loadAllFiles();
         WebDriver driver = setBrowser("browserName");
 
         DriverManager.setDriver(driver);
@@ -105,14 +114,6 @@ public class BaseTest {
         return driver;
     }
 
-    private WebDriver initFirefoxDriver() {
-        WebDriver driver;
-        System.out.println("Launching Firefox browser...");
-        driver = new FirefoxDriver();
-        driver.manage().window().maximize();
-        return driver;
-    }
-
 //    @BeforeMethod
 //    @Parameters({"browser"})
 //    public void createDriver(@Optional("chrome") String browser) {
@@ -133,6 +134,14 @@ public class BaseTest {
 //        driver.manage().window().maximize();
 //    }
 
+    private WebDriver initFirefoxDriver() {
+        WebDriver driver;
+        System.out.println("Launching Firefox browser...");
+        driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        return driver;
+    }
+
     @AfterMethod
     public void closeBrowser() {
         try {
@@ -142,6 +151,7 @@ public class BaseTest {
         }
         driver.quit();
     }
+
     @AfterMethod
     public void closeBrowser(ITestResult iTestResult) {
         //chụp man hinh khi testcase bi fail
@@ -149,14 +159,6 @@ public class BaseTest {
             CaptureHelper.captureScreenshot(iTestResult.getName());
         }
         DriverManager.quit();
-    }
-    public static void loginCRM() {
-        driver.get("https://crm.anhtester.com/admin/authentication");
-        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).clear();
-        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).clear();
-        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).sendKeys("admin@example.com");
-        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).sendKeys("123456");
-        driver.findElement(By.xpath(LocatorsCRM.buttonLogin)).click();
     }
 
 
