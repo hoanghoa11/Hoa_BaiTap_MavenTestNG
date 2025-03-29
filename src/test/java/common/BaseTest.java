@@ -3,17 +3,23 @@ package common;
 
 import com.hoa.drivers.DriverManager;
 import com.hoa.drivers.PropertiesHelper;
+import com.hoa.helpers.CaptureHelper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.io.FileHandler;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import java.io.File;
 import java.time.Duration;
 
 public class BaseTest {
@@ -65,7 +71,7 @@ public class BaseTest {
             case "chrome":
                 ChromeOptions options = new ChromeOptions();
                 //set chrome as Headless
-                options.addArguments("--headless");
+//                options.addArguments("--headless");
                 options.addArguments("--disable-notifications");
                 driver = new ChromeDriver(options);
                 break;
@@ -137,10 +143,12 @@ public class BaseTest {
         driver.quit();
     }
     @AfterMethod
-    public void closeDriver() {
-        if (DriverManager.getDriver() != null) {
-            DriverManager.quit();
+    public void closeBrowser(ITestResult iTestResult) {
+        //chụp man hinh khi testcase bi fail
+        if (ITestResult.FAILURE == iTestResult.getStatus()) {
+            CaptureHelper.captureScreenshot(iTestResult.getName());
         }
+        DriverManager.quit();
     }
     public static void loginCRM() {
         driver.get("https://crm.anhtester.com/admin/authentication");
@@ -150,5 +158,6 @@ public class BaseTest {
         driver.findElement(By.xpath(LocatorsCRM.inputPassword)).sendKeys("123456");
         driver.findElement(By.xpath(LocatorsCRM.buttonLogin)).click();
     }
+
 
 }
