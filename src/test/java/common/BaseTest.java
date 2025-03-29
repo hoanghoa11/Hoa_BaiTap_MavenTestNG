@@ -36,24 +36,24 @@ public class BaseTest {
         driver.manage().window().maximize();
     }
 
-    public void createBrowser(String browserName) {
-        if (browserName.trim().toLowerCase().equals("chrome")) { //chuyen ve chu thuong cat khoang trang o 2   dau
-            driver = new ChromeDriver();
-        }
-        if (browserName.trim().toLowerCase().equals("firefox")) {
-            driver = new FirefoxDriver();
-        }
-        if (browserName.trim().toLowerCase().equals("edge")) {
-            driver = new EdgeDriver();
-        }
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
-        driver.manage().window().maximize();
-    }
+//    public void createBrowser(String browserName) {
+//        if (browserName.trim().toLowerCase().equals("chrome")) { //chuyen ve chu thuong cat khoang trang o 2   dau
+//            driver = new ChromeDriver();
+//        }
+//        if (browserName.trim().toLowerCase().equals("firefox")) {
+//            driver = new FirefoxDriver();
+//        }
+//        if (browserName.trim().toLowerCase().equals("edge")) {
+//            driver = new EdgeDriver();
+//        }
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+//        driver.manage().window().maximize();
+//    }
     @BeforeMethod
     @Parameters({"browser"})
     public void createDriver(@Optional("chrome") String browserName) {
-        PropertiesHelper.loadAllFiles();
+        PropertiesHelper.loadAllFiles() ;
         WebDriver driver = setBrowser("browserName");
 
         DriverManager.setDriver(driver);
