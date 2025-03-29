@@ -67,5 +67,48 @@ BÀI TẬP 4 PHẦN MỞ RỘNG
 BÀI TẬP 5 VỀ POM (Page Object Model)
 
 - Thiết kế các hàm xử lý trong từng trang: enterEmail, enterPassword,..., addCategory, addProduct,...
+
+ 
+ 	
+BÀI TẬP 6 VỀ POM (Page Object Model)
+
+- Tạo POM cho trang Product (Page và Test case và liên kết trang)
+- Thực hiện chức năng add và edit
+- Tạo suite XML để chạy multi class/method
+
+"BÀI TẬP 7 VỀ POM + COMMON LIBRARY
+
+- Tạo class chung bên ""main"" package
+- Viết ít nhất 3 hàm chung: waitForPageLoaded, clickElement, setText
+- Có Explicit wait cho các hàm chung để ổn định code
+- Bỏ sleep và ImplicitWait
+=> Thay thế toàn bộ hàm chung cho bài tập POM ở BT6
+
+Note: khi làm được cái này thì Cấu trúc code theo POM và có được hàm xử lý chung từ class chung -> Bước đầu để build Framework về sau"
+
+"BÀI TẬP 8 VỀ POM + COMMON LIBRARY
+
+- Bổ sung thêm hàm chung
+- Chỉnh sửa lại file SetupBrowser để chạy multi browser"
+
+"BÀI TẬP 9 HANDLE WEB TABLE
+(Vận dụng Handle table)
+
+- Viết thêm hàm search data table cho Product page và Category page"
+
+"BÀI TẬP 10 ĐỌC GHI EXCEL FILE
+(Vận dụng đọc ghi file Excel với Apache POI)
+(Từ bài học 26)
+
+- Thay thế toàn bộ Data test của các trang: Login, Brand, Category, Product
+Thành data đọc từ Excel File"
+
+
+"BÀI TẬP 11 XỬ LÝ FILE PROPERTIES
+(Từ bài học 27)
+
+- Setup class PropertieHelper cho hệ thống eCommerce
+
+- Gọi hàm getValue để lấy giá trị configs từ các file properties để truyền vào các chổ config trong các class: SetupBrowser, Login, Đường dẫn file excel từ các class đã dùng để ổn định giá trị setup về sau."
 - Tạo liên kết trang: Login => Dashboard, Dashboard => Category, Dashboard => Product
 - Tạo suite xml để gọi test case chạy chứ không chạy trực tiếp trong class
