@@ -1,5 +1,8 @@
 package keywords;
 
+import com.hoa.drivers.DriverManager;
+import com.hoa.utils.LogUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -42,93 +45,102 @@ public class WebUI {
     }
 
     public static WebElement getWebElement(By by) {
-        return driver.findElement(by);
+        return DriverManager.getDriver().findElement(by);
     }
 
     public static Boolean checkElementExist(By by) {
         sleep(2);
-        List<WebElement> listElement = driver.findElements(by);
+        List<WebElement> listElement = DriverManager.getDriver().findElements(by);
 
         if (listElement.size() > 0) {
-            System.out.println("checkElementExist: " + true + " --- " + by);
+            LogUtils.info("checkElementExist: " + true + " --- " + by);
             return true;
         } else {
-            System.out.println("checkElementExist: " + false + " --- " + by);
+            LogUtils.info("checkElementExist: " + false + " --- " + by);
             return false;
         }
     }
 
+    @Step("Open URL: {0}")
     public static void openURL(String url) {
-        driver.get(url);
+        DriverManager.getDriver().get(url);
         sleep(STEP_TIME);
-        logConsole("Open URL: " + url);
+        LogUtils.info("Open URL: " + url);
     }
 
+    @Step("Click element : {0}")
     public static void clickElement(String by) {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+//        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(by)));
         waitForElementClickable(By.xpath(by));
         sleep(STEP_TIME);
-        driver.findElement(By.xpath(by)).click();
-        logConsole("Click element " + by);
+        DriverManager.getDriver().findElement(By.xpath(by)).click();
+        LogUtils.info("Click element " + by);
     }
 
+    @Step("Set text {1} on element {0}")
     public static void setText(String by, String value) {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+//        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(by)));
         waitForElementVisible(By.xpath(by));
         sleep(STEP_TIME);
-        driver.findElement(By.xpath(by)).sendKeys(value);
-        logConsole("Set text " + value + " on element " + by);
+        DriverManager.getDriver().findElement(By.xpath(by)).sendKeys(value);
+        LogUtils.info("Set text " + value + " on element " + by);
     }
 
+    @Step("Click element {0}")
     public static void clickElement(By by) {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+//        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         waitForElementClickable(by);
         highLightElement(by);
         sleep(STEP_TIME);
-        driver.findElement(by).click();
-        logConsole("Click element " + by);
+        DriverManager.getDriver().findElement(by).click();
+        LogUtils.info("Click element " + by);
     }
 
+    @Step("Click element {0} with timeout {1}")
     public static void clickElement(By by, int timeout) {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+//        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeout));
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         waitForElementClickable(by, timeout);
         highLightElement(by);
         sleep(STEP_TIME);
-        driver.findElement(by).click();
-        logConsole("Click element " + by);
+        DriverManager.getDriver().findElement(by).click();
+        LogUtils.info("Click element " + by);
     }
 
+    @Step("Set text {1} on element {0}")
     public static void setText(By by, String value) {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+//        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         waitForElementVisible(by);
         highLightElement(by);
         sleep(STEP_TIME);
-        driver.findElement(by).sendKeys(value);
-        logConsole("Set text " + value + " on element " + by);
+        DriverManager.getDriver().findElement(by).sendKeys(value);
+        LogUtils.info("Set text " + value + " on element " + by);
     }
 
+    @Step("Set text {1} on element {0} with timeout {2}")
     public static void setText(By by, String value, int timeOut) {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+//        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         waitForElementVisible(by, timeOut);
         highLightElement(by);
         sleep(STEP_TIME);
-        driver.findElement(by).sendKeys(value);
-        logConsole("Set text " + value + " on element " + by);
+        DriverManager.getDriver().findElement(by).sendKeys(value);
+        LogUtils.info("Set text " + value + " on element " + by);
     }
 
+    @Step("Get text of element {0}")
     public static String getElementText(By by) {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+//        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         waitForElementVisible(by);
         sleep(STEP_TIME);
-        String text = driver.findElement(by).getText();
-        logConsole("Get text of element " + by + " ==> " + text);
+        String text = DriverManager.getDriver().findElement(by).getText();
+        LogUtils.info("Get text of element " + by + " ==> " + text);
+//        AllureManager.saveTextLog("==>" + text);
         return text; //Trả về một giá trị kiểu String
     }
 

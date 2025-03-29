@@ -3,6 +3,7 @@ package BaiTap13.Testcase;
 import BaiTap13.Page.Login;
 import com.hoa.helpers.CaptureHelper;
 import com.hoa.helpers.ExcelHelper;
+import com.hoa.utils.LogUtils;
 import common.BaseTest;
 import org.testng.annotations.Test;
 
@@ -15,6 +16,7 @@ public class LoginTest extends BaseTest {
     public void testLoginCMS_Success() {
         //Gọi hàm setExcel file để chỉ định file excel và sheet cụ thể
         ExcelHelper excelHelper = new ExcelHelper();
+        LogUtils.info("ghi cái gì đó ra đây");
         excelHelper.setExcelFile("src/test/resources/testData/importdata_CMS.xlsx", "Login");
 
         loginPage = new Login(driver);
