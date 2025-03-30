@@ -2,6 +2,7 @@ package listeners;
 
 import com.hoa.helpers.CaptureHelper;
 import com.hoa.helpers.PropertiesHelper;
+import com.hoa.reports.AllureManager;
 import com.hoa.reports.ExtentReportManager;
 import com.hoa.reports.ExtentTestManager;
 import com.hoa.utils.LogUtils;
@@ -62,6 +63,10 @@ public class TestListener implements ITestListener {
         ExtentTestManager.addScreenshot(result.getName());
         ExtentTestManager.logMessage(Status.FAIL, result.getThrowable().toString());
         ExtentTestManager.logMessage(Status.FAIL, result.getName() + " is failed.");
+
+        //Allure Report
+        AllureManager.saveTextLog(result.getName() + " is failed.");
+        AllureManager.saveScreenshotPNG();
     }
 
     @Override
