@@ -140,62 +140,62 @@ public class WebUI {
         sleep(STEP_TIME);
         String text = DriverManager.getDriver().findElement(by).getText();
         LogUtils.info("Get text of element " + by + " ==> " + text);
-//        AllureManager.saveTextLog("==>" + text);
+
         return text; //Trả về một giá trị kiểu String
     }
 
     public static void setTextAndKey(By by, String value, Keys key) {
         waitForElementVisible(by);
         getWebElement(by).sendKeys(value, key);
-        System.out.println("Set text: " + value + " on element " + by);
+        LogUtils.info("Set text: " + value + " on element " + by);
     }
 
     public static void setKey(By by, Keys key) {
         waitForElementVisible(by);
         getWebElement(by).sendKeys(key);
-        System.out.println("Set key: " + key.name() + " on element");
+        LogUtils.info("Set key: " + key.name() + " on element");
     }
 
     public static void scrollToElement(By element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("arguments[0].scrollIntoView(true);", getWebElement(element));
     }
 
     public static void scrollToElement(WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public static void scrollToPosition(int X, int Y) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("window.scrollTo(" + X + "," + Y + ");");
     }
 
     public static boolean moveToElement(By toElement) {
         try {
-            Actions action = new Actions(driver);
+            Actions action = new Actions(DriverManager.getDriver());
             action.moveToElement(getWebElement(toElement)).release(getWebElement(toElement)).build().perform();
             return true;
         } catch (Exception e) {
-            logConsole(e.getMessage());
+            LogUtils.info(e.getMessage());
             return false;
         }
     }
 
     public static boolean moveToOffset(int X, int Y) {
         try {
-            Actions action = new Actions(driver);
+            Actions action = new Actions(DriverManager.getDriver());
             action.moveByOffset(X, Y).build().perform();
             return true;
         } catch (Exception e) {
-            logConsole(e.getMessage());
+            LogUtils.info(e.getMessage());
             return false;
         }
     }
 
     public static boolean hoverElement(By by) {
         try {
-            Actions action = new Actions(driver);
+            Actions action = new Actions(DriverManager.getDriver());
             action.moveToElement(getWebElement(by)).perform();
             return true;
         } catch (Exception e) {

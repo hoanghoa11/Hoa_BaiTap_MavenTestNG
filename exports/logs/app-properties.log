@@ -1,2 +1,15 @@
 [INFO] 30-03-2025 04:19:05 [main] LogUtils - ghi cái gì đó ra đây
 [INFO] 30-03-2025 04:25:17 [main] LogUtils - ghi cái gì đó ra đây
+[INFO] 31-03-2025 01:05:23 [main] LogUtils - Running test case testLoginCMS_Success
+[INFO] 31-03-2025 01:05:25 [main] LogUtils - ghi cái gì đó ra đây
+[ERROR] 31-03-2025 01:05:32 [main] LogUtils - Test case testLoginCMS_Success is failed.
+[ERROR] 31-03-2025 01:05:32 [main] LogUtils - org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//span[normalize-space()='Dashboard']"}
+  (Session info: chrome=134.0.6998.178)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: '4.25.0', revision: '8a8aea2337'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.8'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [204763babb014d26a13f4ac741314ba8, findElement {using=xpath, value=//span[normalize-space()='Dashboard']}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 134.0.6998.178, chrome: {chromedriverVersion: 134.0.6998.165 (fd886e2cb29..., userDataDir: C:\Users\Admin\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:53742}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:53742/devtoo..., se:cdpVersion: 134.0.6998.178, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 204763babb014d26a13f4ac741314ba8
+[INFO] 31-03-2025 01:05:35 [main] LogUtils - End testing Hoa_BaiTap_MavenTestNG

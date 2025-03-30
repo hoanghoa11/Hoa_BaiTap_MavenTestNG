@@ -1,6 +1,6 @@
 package BaiTap11;
 
-import com.hoa.drivers.PropertiesHelper;
+import com.hoa.helpers.PropertiesHelper;
 import com.hoa.helpers.ExcelHelper;
 import common.BaseTest;
 import org.testng.annotations.Test;
@@ -9,6 +9,7 @@ public class LoginTest extends BaseTest {
 
     //Khai bao đôi tượng
     Login loginPage;
+
     @Test
     public void testLoginCMS_Success_Properties() {
         //XỬ LÝ FILE PROPERTIES
@@ -16,6 +17,7 @@ public class LoginTest extends BaseTest {
         loginPage.LoginCMS(PropertiesHelper.getValue("EMAIL"), PropertiesHelper.getValue("PASSWORD"));
         loginPage.verifyLoginSuccess();
     }
+
     @Test
     public void testLoginCMS_Success() {
         //Gọi hàm setExcel file để chỉ định file excel và sheet cụ thể

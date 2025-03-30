@@ -1,8 +1,6 @@
 package com.hoa.helpers;
 
 import com.hoa.drivers.DriverManager;
-import com.hoa.drivers.PropertiesHelper;
-import com.hoa.drivers.SystemHelper;
 import org.monte.media.Format;
 import org.monte.media.Registry;
 import org.monte.media.math.Rational;
@@ -24,25 +22,14 @@ import static org.monte.media.VideoFormatKeys.*;
 public class CaptureHelper extends ScreenRecorder {
     // Record with Monte Media library
     public static ScreenRecorder screenRecorder;
+    //Tạo format ngày giờ để xíu gắn dô cái name của screenshot hoặc record video không bị trùng tên (không bị ghi đè file)
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
     public String name;
 
     //Hàm xây dựng
     public CaptureHelper(GraphicsConfiguration cfg, Rectangle captureArea, Format fileFormat, Format screenFormat, Format mouseFormat, Format audioFormat, File movieFolder, String name) throws IOException, AWTException {
         super(cfg, captureArea, fileFormat, screenFormat, mouseFormat, audioFormat, movieFolder);
         this.name = name;
-    }
-
-    //Hàm này bắt buộc để ghi đè custom lại hàm trong thư viên viết sẵn
-    @Override
-    protected File createMovieFile(Format fileFormat) throws IOException {
-
-        if (!movieFolder.exists()) {
-            movieFolder.mkdirs();
-        } else if (!movieFolder.isDirectory()) {
-            throw new IOException("\"" + movieFolder + "\" is not a directory.");
-        }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-        return new File(movieFolder, name + "-" + dateFormat.format(new Date()) + "." + Registry.getInstance().getExtension(fileFormat));
     }
 
     // Start record video
@@ -75,9 +62,6 @@ public class CaptureHelper extends ScreenRecorder {
         }
     }
 
-    //Tạo format ngày giờ để xíu gắn dô cái name của screenshot hoặc record video không bị trùng tên (không bị ghi đè file)
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-
     public static void captureScreenshot(String screenshotName) {
         try {
             // Tạo tham chiếu đối tượng của TakesScreenshot với dirver hiện tại
@@ -96,6 +80,19 @@ public class CaptureHelper extends ScreenRecorder {
         } catch (Exception e) {
             System.out.println("Exception while taking screenshot: " + e.getMessage());
         }
+    }
+
+    //Hàm này bắt buộc để ghi đè custom lại hàm trong thư viên viết sẵn
+    @Override
+    protected File createMovieFile(Format fileFormat) throws IOException {
+
+        if (!movieFolder.exists()) {
+            movieFolder.mkdirs();
+        } else if (!movieFolder.isDirectory()) {
+            throw new IOException("\"" + movieFolder + "\" is not a directory.");
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        return new File(movieFolder, name + "-" + dateFormat.format(new Date()) + "." + Registry.getInstance().getExtension(fileFormat));
     }
 
     public void takeScreenshot(ITestResult result) {

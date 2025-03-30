@@ -1,12 +1,15 @@
 package listeners;
 
-import com.hoa.drivers.PropertiesHelper;
-import keywords.WebUI;
+import com.hoa.helpers.CaptureHelper;
+import com.hoa.helpers.PropertiesHelper;
+import com.hoa.reports.ExtentReportManager;
+import com.hoa.reports.ExtentTestManager;
+import com.hoa.utils.LogUtils;
+
+import com.aventstack.extentreports.Status;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import com.hoa.helpers.CaptureHelper;
-
 
 public class TestListener implements ITestListener {
 
@@ -21,51 +24,53 @@ public class TestListener implements ITestListener {
     @Override
     public void onStart(ITestContext result) {
         PropertiesHelper.loadAllFiles();
+        //Khởi tạo report (Extent và Allure)
     }
 
     @Override
     public void onFinish(ITestContext result) {
-        System.out.println("onFinish" + result.getName());
+        LogUtils.info("End testing " + result.getName());
+
+        //Kết thúc và thực thi Extents Report
+        ExtentReportManager.getExtentReports().flush();
     }
 
     @Override
     public void onTestStart(ITestResult result) {
+        LogUtils.info("Running test case " + result.getName());
 
-        System.out.println("******** " + result.getName() + "************");
-        CaptureHelper.startRecord(result.getName());
+        //Bắt đầu ghi 1 TCs mới vào Extent Report
+        ExtentTestManager.saveToReport(getTestName(result), getTestDescription(result));
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        System.out.println("====> " + result.getName() + "is successfully.");
-        CaptureHelper.stopRecord();
+        LogUtils.info("Test case " + result.getName() + " is passed.");
+
+        //Extent Report
+        ExtentTestManager.logMessage(Status.PASS, result.getName() + " is passed.");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        System.out.println("====> " + result.getName() + " is FAIL.");
+        LogUtils.error("Test case " + result.getName() + " is failed.");
+        //Screenshot khi fail
+        //CaptureHelper.captureScreenshot(result.getName());
+        LogUtils.error(result.getThrowable().toString());
 
-        // Lấy giá trị từ PropertiesHelper và kiểm tra nếu null
-        String screenshotFailValue = PropertiesHelper.getValue("SCREENSHOT_FAIL");
-
-        // Kiểm tra null và chuyển đổi sang kiểu Boolean
-        if (screenshotFailValue != null && Boolean.parseBoolean(screenshotFailValue) == false) {
-            CaptureHelper.captureScreenshot(result.getName());
-        }
-
-        WebUI.sleep(1);
-        CaptureHelper.stopRecord();
+        //Extent Report
+        ExtentTestManager.addScreenshot(result.getName());
+        ExtentTestManager.logMessage(Status.FAIL, result.getThrowable().toString());
+        ExtentTestManager.logMessage(Status.FAIL, result.getName() + " is failed.");
     }
-
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        System.out.println("******** " + result.getName() + "is SKIPPED *************");
-        CaptureHelper.stopRecord();
+        LogUtils.error("Test case " + result.getName() + " is skipped.");
+        LogUtils.error(result.getThrowable().toString());
+
+        //Extent Report
+        ExtentTestManager.logMessage(Status.SKIP, result.getThrowable().toString());
     }
 
-    @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-        System.out.println("onTestFailedButWithinSuccessPercentage: " + result.getName());
-    }
 }
